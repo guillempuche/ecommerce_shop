@@ -444,8 +444,11 @@ __metadata:
   resolution: "@demo-shop/utils-env@workspace:packages/utils/env"
   dependencies:
     "@demo-shop/utils-tsconfig": "workspace:*"
+    "@effect/platform": "npm:0.69.31"
+    "@effect/platform-node": "npm:0.64.23"
     "@types/node": "npm:22.10.10"
     dotenv: "npm:16.4.5"
+    effect: "npm:3.12.0"
     tsup: "npm:8.3.6"
     typescript: "npm:5.7.2"
   peerDependencies:
