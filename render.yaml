@@ -1,0 +1,15 @@
+services:
+  - type: web
+    name: ecommerce_server
+    env: node
+    buildCommand: |
+      yarn install
+      yarn turbo run @demo-shop/apps-server#build
+    startCommand: yarn start:prod
+    envVars:
+      - key: NODE_ENV
+        value: production
+      - key: LOG_LEVEL
+        value: info
+    envGroups:
+      - ecommerce_secrets
