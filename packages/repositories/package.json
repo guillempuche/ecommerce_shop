@@ -1,0 +1,29 @@
+{
+	"name": "@demo-shop/repos",
+	"version": "0.0.1",
+	"type": "module",
+	"types": "./dist/index.d.ts",
+	"exports": {
+		".": {
+			"types": "./src/index.ts",
+			"import": "./src/index.ts",
+			"require": "./dist/index.js"
+		}
+	},
+	"scripts": {
+		"build": "tsup ./src/index.ts --format esm --dts --out-dir dist --tsconfig tsconfig.json --silent",
+		"check-types": "tsc --noEmit",
+		"watch": "tsc --watch --preserveWatchOutput"
+	},
+	"dependencies": {
+		"@demo-shop/domain": "workspace:*",
+		"@demo-shop/utils-logging": "workspace:*",
+		"effect": "3.12.0"
+	},
+	"devDependencies": {
+		"@demo-shop/utils-tsconfig": "workspace:*",
+		"@types/node": "22.10.10",
+		"tsup": "8.3.6",
+		"typescript": "5.7.2"
+	}
+}

@@ -1,0 +1,25 @@
+/* Global Reset & Base Styles */
+* {
+	box-sizing: border-box;
+	margin: 0;
+	padding: 0;
+}
+
+/* Smooth scrolling */
+html, body {
+  height: 100%;
+  margin: 0;
+  padding: 0;
+}
+
+/* Global focus styles */
+:focus-visible {
+  outline: 2px solid var(--color-focus, #0078d4);
+  outline-offset: 2px;
+  border-radius: 2px;
+}
+
+/* If you want to remove the default focus styles while keeping the focus-visible styles */
+:focus:not(:focus-visible) {
+  outline: none;
+}

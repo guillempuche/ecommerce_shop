@@ -1,0 +1,15 @@
+{
+	"name": "@demo-shop/utils-tsconfig",
+	"version": "0.0.1",
+	"type": "module",
+	"exports": {
+		"./base.json": "./base.json",
+		"./node.json": "./node.json",
+		"./paths": "./tsconfig_paths.js",
+		"./ui.json": "./ui.json"
+	},
+	"scripts": {
+		"generate-paths": "node ./generate_monorepo_paths.js"
+	},
+	"private": true
+}

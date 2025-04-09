@@ -1,0 +1,45 @@
+{
+	"version": "0.2.0",
+	"configurations": [
+		{
+			"type": "chrome",
+			"request": "launch",
+			"name": "Web: Launch Chrome",
+			"url": "http://localhost:3000",
+			"port": 9222,
+			"webRoot": "${workspaceFolder}/apps/web",
+			"sourceMaps": true,
+			"sourceMapPathOverrides": {
+				"/@fs/*": "${webRoot}/*"
+			},
+			"trace": false
+		},
+		{
+			"type": "chrome",
+			"request": "attach",
+			"name": "Web: Attach Chromium",
+			"port": 9222,
+			"url": "http://localhost:3000/*",
+			"webRoot": "${workspaceFolder}",
+			"sourceMaps": true,
+			"sourceMapPathOverrides": {
+				"/@fs/*": "${webRoot}/*"
+			},
+			"trace": false
+		},
+		{
+			// To work with tsx https://tsx.is/vscode
+			"type": "node",
+			"request": "attach",
+			"name": "Server: Attach",
+			"port": 9229,
+			"skipFiles": [
+				// Node.js internal core modules
+				"<node_internals>/**",
+
+				// Ignore all dependencies (optional)
+				"${workspaceFolder}/node_modules/**"
+			]
+		}
+	]
+}

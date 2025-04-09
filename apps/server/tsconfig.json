@@ -1,0 +1,9 @@
+{
+	"extends": "@demo-shop/utils-tsconfig/node.json",
+	"compilerOptions": {
+		"rootDir": "src",
+		"outDir": "dist"
+	},
+	"exclude": ["node_modules", "dist"],
+	"include": ["src"]
+}

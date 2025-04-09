@@ -1,0 +1,25 @@
+{
+	"extends": "@demo-shop/utils-tsconfig/ui.json",
+	"compilerOptions": {
+		"outDir": "dist",
+		"resolveJsonModule": true,
+		"rootDir": ".",
+		"jsx": "preserve",
+		"plugins": [
+			{
+				"name": "next"
+			}
+		],
+		"paths": {
+			"@/components/*": ["./src/components/*"],
+			"@/contexts/*": ["./src/contexts/*"],
+			"@/lib/*": ["./src/lib/*"]
+		},
+		"allowJs": true,
+		"noEmit": true,
+		"incremental": true,
+		"isolatedModules": true
+	},
+	"include": ["next-env.d.ts", "**/*.ts", "**/*.tsx", ".next/types/**/*.ts"],
+	"exclude": ["node_modules", "dist"]
+}
