@@ -16,14 +16,19 @@
 		"watch": "tsc --watch --preserveWatchOutput"
 	},
 	"dependencies": {
-		"@effect/platform": "0.69.21",
+		"dotenv": "16.4.5"
+	},
+	"peerDependencies": {
+		"@effect/platform": "0.69.31",
 		"@effect/platform-node": "0.64.23",
-		"dotenv": "16.4.5",
 		"effect": "3.12.0"
 	},
 	"devDependencies": {
 		"@demo-shop/utils-tsconfig": "workspace:*",
+		"@effect/platform": "0.69.31",
+		"@effect/platform-node": "0.64.23",
 		"@types/node": "22.10.10",
+		"effect": "3.12.0",
 		"tsup": "8.3.6",
 		"typescript": "5.7.2"
 	},
