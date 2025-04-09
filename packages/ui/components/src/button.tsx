@@ -1,7 +1,6 @@
 'use client'
 
 import type { MouseEvent, ReactNode } from 'react'
-import React from 'react'
 import styled, { css } from 'styled-components'
 
 type Feedback = 'Standard' | 'Primary'

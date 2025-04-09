@@ -12,11 +12,9 @@ const meta: Meta<typeof BagIcon> = {
 	tags: ['autodocs'],
 	argTypes: {
 		active: { control: 'boolean' },
-		onClick: { action: 'clicked' },
 	},
 	args: {
 		active: false,
-		onClick: fn(),
 	},
 }
 

@@ -1,5 +1,3 @@
-'use client'
-
 import styled from 'styled-components'
 
 import { BagIcon } from './bag_icon'
@@ -7,7 +5,7 @@ import { BagIcon } from './bag_icon'
 interface BagProps {
 	quantity: number
 	className?: string
-	onClick?: () => void
+	onClick?: (() => void) | undefined
 }
 
 const StyledBag = styled.button`

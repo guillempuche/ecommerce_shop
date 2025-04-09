@@ -14,7 +14,6 @@ import {
 	typography,
 } from './tokens'
 
-// Context for theme management
 interface ThemeContextProps {
 	currentTheme: ThemeName
 	setTheme: (theme: ThemeName) => void
@@ -27,7 +26,6 @@ const ThemeContext = createContext<ThemeContextProps>({
 	availableThemes: Object.keys(themes) as ThemeName[],
 })
 
-// Hook for accessing theme context
 export const useTheme = () => useContext(ThemeContext)
 
 interface ThemeProviderProps {
