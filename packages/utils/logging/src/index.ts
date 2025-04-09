@@ -1,24 +1,10 @@
-import { rootProvider } from './categories.js'
-import { nodeFormatter } from './formatters/node.js'
-import { uiFormatter } from './formatters/ui.js'
-import type { LogMessage } from './types.js'
+import { rootProvider } from './categories'
+import { nodeFormatter } from './node'
+import type { LogMessage } from './types'
 
-export * from './categories.js'
+export * from './categories'
 
-const isNodeEnvironment = (): boolean => {
-	try {
-		// Check for Node.js process
-		return (
-			typeof process !== 'undefined' &&
-			process.versions != null &&
-			process.versions.node != null
-		)
-	} catch {
-		return false
-	}
-}
-// const formatter = isNode ? nodeFormatter : uiFormatter // Both RN and Web use browser formatter
-const formatter = isNodeEnvironment() ? nodeFormatter : uiFormatter
+const formatter = nodeFormatter
 
 rootProvider.updateRuntimeSettings({
 	channel: {
