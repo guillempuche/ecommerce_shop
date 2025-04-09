@@ -13,7 +13,6 @@
 		"@demo-shop/domain": "workspace:*",
 		"@demo-shop/repos": "workspace:*",
 		"@demo-shop/ui-components": "workspace:*",
-		"@demo-shop/ui-localization": "workspace:*",
 		"@demo-shop/utils-env": "workspace:*",
 		"@demo-shop/utils-logging": "workspace:*",
 		"next": "14.2.3",
