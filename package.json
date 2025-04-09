@@ -11,7 +11,6 @@
 	"workspaces": [
 		"apps/*",
 		"packages/*",
-		"packages/domain/*",
 		"packages/ui/*",
 		"packages/utils/*"
 	],
@@ -38,8 +37,10 @@
 	},
 	"devDependencies": {
 		"@biomejs/biome": "1.9.4",
+		"@secretlint/secretlint-rule-no-dotenv": "^9.3.0",
 		"@secretlint/secretlint-rule-preset-recommend": "9.2.0",
 		"@types/node": "22.10.10",
+		"lefthook": "^1.11.8",
 		"secretlint": "9.2.0",
 		"syncpack": "13.0.2",
 		"tsup": "8.3.6",
