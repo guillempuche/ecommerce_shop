@@ -4,7 +4,7 @@
 	"main": "src/index.ts",
 	"type": "module",
 	"scripts": {
-		"build_": "tsup ./src/index.ts --format esm --dts --out-dir dist --tsconfig tsconfig.json --silent",
+		"build": "tsup ./src/index.ts --format esm --dts --out-dir dist --tsconfig tsconfig.json --silent",
 		"start": "NODE_ENV=local tsx watch src/index.ts",
 		"start:debug": "NODE_ENV=local tsx watch --inspect-brk src/index.ts"
 	},
