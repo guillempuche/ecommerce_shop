@@ -24,7 +24,10 @@ const make = Effect.map(
 			// Try environment-specific file first
 			yield* dotenv.config({ path: envPath }).pipe(
 				Effect.catchTag('ErrorDotenv', error => {
-					return dotenv.config({ path: defaultPath })
+					// return dotenv.config({ path: defaultPath })
+					return Effect.logInfo(
+						'No .env files found, using platform environment variables',
+					)
 				}),
 			)
 		}),
