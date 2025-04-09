@@ -4,11 +4,7 @@ const nextConfig = {
 	compiler: {
 		styledComponents: true,
 	},
-	transpilePackages: [
-		'@demo-shop/domain',
-		'@demo-shop/ui-components',
-		'@demo-shop/ui-localization',
-	],
+	transpilePackages: ['@demo-shop/domain', '@demo-shop/ui-components'],
 	// experimental: {
 	// 	serverActions: true,
 	// },

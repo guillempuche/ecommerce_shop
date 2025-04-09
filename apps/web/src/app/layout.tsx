@@ -1,7 +1,6 @@
 import type { Metadata } from 'next'
 
 import { CartProvider } from '@/contexts/cart'
-import { LocalizationInitializer } from '@/lib/localization_initializer'
 import StyledComponentsRegistry from '@/lib/styled_components_registry'
 import { ThemeProvider } from '@demo-shop/ui-components'
 import './global.css'
@@ -17,16 +16,13 @@ export default function RootLayout({
 	children: React.ReactNode
 }) {
 	return (
-		<html lang='es'>
+		<html lang='en'>
 			<body>
-				<StyledComponentsRegistry>
-					<ThemeProvider initialTheme='light'>
-						<CartProvider>
-							<LocalizationInitializer />
-							{children}
-						</CartProvider>
-					</ThemeProvider>
-				</StyledComponentsRegistry>
+				<CartProvider>
+					<StyledComponentsRegistry>
+						<ThemeProvider initialTheme='light'>{children}</ThemeProvider>
+					</StyledComponentsRegistry>
+				</CartProvider>
 			</body>
 		</html>
 	)

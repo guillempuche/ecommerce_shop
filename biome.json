@@ -54,7 +54,8 @@
 			"./**/.yarn",
 			"./**/.pnp.*",
 			"./**/dist",
-			"./**/public"
+			"./**/public",
+			"./**/.next"
 		],
 		"ignoreUnknown": true
 	}
