@@ -1,47 +1,64 @@
 {
-	"$schema": "https://json.schemastore.org/tsconfig",
-	"compileOnSave": true,
-	"compilerOptions": {
-		"declaration": true,
-		"declarationMap": true,
-		"noEmit": false,
-		"rootDir": ".",
-		"preserveConstEnums": true,
-		"sourceMap": true,
-		"module": "NodeNext",
-		"moduleResolution": "bundler",
-		"resolveJsonModule": true,
-		"allowJs": true,
-		"importHelpers": true,
-		"composite": false,
-		"target": "ES2022",
-		"alwaysStrict": true,
-		"moduleDetection": "force",
-		"exactOptionalPropertyTypes": true,
-		"noFallthroughCasesInSwitch": true,
-		"noImplicitAny": true,
-		"noImplicitReturns": true,
-		"noImplicitThis": true,
-		"noImplicitOverride": true,
-		"noUncheckedIndexedAccess": true,
-		"strict": true,
-		"strictFunctionTypes": true,
-		"strictNullChecks": true,
-		"strictPropertyInitialization": true,
-		"isolatedDeclarations": false,
-		"isolatedModules": true,
-		"useUnknownInCatchVariables": true,
-		"verbatimModuleSyntax": true,
-		"emitDecoratorMetadata": true,
-		"experimentalDecorators": true,
-		"esModuleInterop": true,
-		"allowSyntheticDefaultImports": true,
-		"skipDefaultLibCheck": true,
-		"skipLibCheck": true,
-		"forceConsistentCasingInFileNames": true,
-	},
-	"include": [
-		"src/**/*",
-		"types.d.ts"
-	]
+  "$schema": "https://json.schemastore.org/tsconfig",
+  "compileOnSave": true,
+  "compilerOptions": {
+    "declaration": true,
+    "declarationMap": true,
+    "noEmit": false,
+    "rootDir": ".",
+    "preserveConstEnums": true,
+    "sourceMap": true,
+    "module": "ESNext",
+    "moduleResolution": "bundler",
+    "resolveJsonModule": true,
+    "allowJs": true,
+    "importHelpers": true,
+    "composite": false,
+    "target": "ES2022",
+    "alwaysStrict": true,
+    "moduleDetection": "force",
+    "exactOptionalPropertyTypes": true,
+    "noFallthroughCasesInSwitch": true,
+    "noImplicitAny": true,
+    "noImplicitReturns": true,
+    "noImplicitThis": true,
+    "noImplicitOverride": true,
+    "noUncheckedIndexedAccess": true,
+    "strict": true,
+    "strictFunctionTypes": true,
+    "strictNullChecks": true,
+    "strictPropertyInitialization": true,
+    "isolatedDeclarations": false,
+    "isolatedModules": true,
+    "useUnknownInCatchVariables": true,
+    "verbatimModuleSyntax": true,
+    "emitDecoratorMetadata": true,
+    "experimentalDecorators": true,
+    "esModuleInterop": true,
+    "allowSyntheticDefaultImports": true,
+    "skipDefaultLibCheck": true,
+    "skipLibCheck": true,
+    "forceConsistentCasingInFileNames": true,
+    "paths": {
+      "@demo-shop/domain": [
+        "../../domain/src"
+      ],
+      "@demo-shop/repos": [
+        "../../repositories/src"
+      ],
+      "@demo-shop/ui-components": [
+        "../../ui/components/src"
+      ],
+      "@demo-shop/utils-env": [
+        "../env/src"
+      ],
+      "@demo-shop/utils-logging": [
+        "../logging/src"
+      ]
+    }
+  },
+  "include": [
+    "src/**/*",
+    "types.d.ts"
+  ]
 }

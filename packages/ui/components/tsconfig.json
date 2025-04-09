@@ -2,9 +2,9 @@
 	"extends": "@demo-shop/utils-tsconfig/ui.json",
 	"compilerOptions": {
 		"exactOptionalPropertyTypes": false,
-		"rootDir": "src",
+		"rootDir": "../../..",
 		"outDir": "dist"
 	},
-	"include": ["src", "src/**/*.json", ".storybook"],
+	"include": ["src", ".storybook"],
 	"exclude": ["node_modules", "dist"]
 }

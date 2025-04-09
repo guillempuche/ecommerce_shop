@@ -1,11 +1,8 @@
 {
-	"extends": "@demo-shop/utils-tsconfig/base.json",
+	"extends": "@demo-shop/utils-tsconfig/node.json",
 	"compilerOptions": {
-		"module": "ESNext",
-		"moduleResolution": "bundler",
-		"rootDir": "src",
-		"outDir": "dist",
-		"types": ["node"]
+		"rootDir": "../../..",
+		"outDir": "dist"
 	},
 	"exclude": ["node_modules", "dist"],
 	"include": ["src"]
