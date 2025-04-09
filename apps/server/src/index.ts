@@ -10,7 +10,15 @@ import { routesProduct } from './routes/product.js'
 async function main() {
 	await Effect.runPromise(Env.load.pipe(Effect.provide(Env.Live)))
 
-	logAppServer.info('Starting server at', process.env.SERVER_URL)
+	const HOST = process.env.HOST || process.env.SERVER_HOST || '0.0.0.0'
+	const PORT = Number.parseInt(
+		process.env.PORT || process.env.SERVER_PORT || '3000',
+		10,
+	)
+	const PROTOCOL = process.env.NODE_ENV === 'production' ? 'https' : 'http'
+
+	const serverUrl = `${PROTOCOL}://${HOST}:${PORT}`
+	logAppServer.info('Starting server at', serverUrl)
 
 	const serverOptions: FastifyHttpOptions<Server> = {
 		logger: {
@@ -52,22 +60,18 @@ async function main() {
 	})
 
 	try {
-		server.listen(
-			{
-				host: process.env.SERVER_HOST || '',
-				port: Number.parseInt(process.env.SERVER_PORT || '', 10),
-			},
-			(err, address) => {
-				if (err) throw err
-				server.log.info(`Server listening at ${address}`)
-			},
-		)
+		await server.listen({
+			host: HOST,
+			port: PORT,
+		})
+		server.log.info(`Server listening at ${server.server.address()}`)
 	} catch (error) {
 		if (error instanceof Error) {
 			logAppServer.error(error.toString())
 		} else {
 			logAppServer.error('An unknown error occurred')
 		}
+		process.exit(1)
 	}
 }
 
