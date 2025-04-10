@@ -1,2 +1,7 @@
 # Next.js
 .next/
+
+# Test
+/test-results/
+/playwright-report/
+/playwright/.cache/

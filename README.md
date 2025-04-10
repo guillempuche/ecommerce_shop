@@ -30,7 +30,7 @@ A seamless shopping experience with a grid-based phone listing, real-time search
 - **State**: React Context API
 - **Styling**: Styled Components, fluid responsive design, CSS variables
 - **Monorepo**: Yarn v4, Turborepo
-- **Testing**: React Testing Library
+- **Testing**: React Testing Library, Playwright for E2E
 - **Analysis**: Biome, TypeScript
 - **CI/CD**: Turbo, `render.yaml`
 
@@ -40,25 +40,26 @@ A seamless shopping experience with a grid-based phone listing, real-time search
 
 ```
 demo-shop/
-├── apps/                    # Server and web apps
-│   ├── apps-server/         # Backend server logic
-│   └── apps-web/            # Next.js frontend
-├── packages/                # Shared packages
-│   ├── domain/              # Business logic (@demo-shop/domain)
-│   │   └── src/
-│   ├── repositories/        # Data access layer (@demo-shop/repos)
-│   │   └── src/
-│   ├── ui/                  # UI-related packages
-│   │   ├── components/      # Reusable UI components (@demo-shop/ui-components)
-│   │   │   └── src/
-│   ├── utils/               # Utility packages
-│   │   ├── env/             # Environment utils (@demo-shop/utils-env)
-│   │   │   └── src/
-│   │   ├── logging/         # Logging utils (@demo-shop/utils-logging)
-│   │   │   └── src/
-│   │   └── typescript-config/ # TypeScript config (e.g., base.json)
-├── package.json             # Root config
-├── turbo.json               # Turborepo config
+├── apps/ # Server and web apps
+│ ├── apps-server/ # Backend server logic
+│ └── apps-web/ # Next.js frontend
+│    └── tests/ # E2E tests with Playwright
+├── packages/ # Shared packages
+│ ├── domain/ # Business logic (@demo-shop/domain)
+│ │ └── src/
+│ ├── repositories/ # Data access layer (@demo-shop/repos)
+│ │ └── src/
+│ ├── ui/ # UI-related packages
+│ │ ├── components/ # Reusable UI components (@demo-shop/ui-components)
+│ │ │ └── src/
+│ ├── utils/ # Utility packages
+│ │ ├── env/ # Environment utils (@demo-shop/utils-env)
+│ │ │ └── src/
+│ │ ├── logging/ # Logging utils (@demo-shop/utils-logging)
+│ │ │ └── src/
+│ │ └── typescript-config/ # TypeScript config (e.g., base.json)
+├── package.json # Root config
+├── turbo.json # Turborepo config
 ```
 
 ---
@@ -77,7 +78,7 @@ demo-shop/
 
 - **Server**: `yarn server`
 - **Web**: `yarn web`
-- **Paths**: `yarn generate-paths` (if needed)
+- **Paths**: `yarn generate-paths` (only when creating packages)
 
 ---
 
@@ -88,6 +89,18 @@ demo-shop/
 ---
 
 ## Testing and Static Analysis
+
+### End-to-End Testing
+
+The application uses Playwright for visual regression and end-to-end testing:
+
+- **Run E2E tests**: `yarn test:e2e`
+- **Update baseline screenshots**: `yarn test:e2e:update`
+- **Debug tests with UI**: `yarn test:e2e:ui`
+
+To run E2E tests, both the web and server applications need to be running. The tests will automatically capture screenshots of key pages (homepage, product details, and checkout) and compare them against the baseline images.
+
+### Static Analysis
 
 - **Types**: `yarn check-types`
 - **Lint**: `yarn lint` (Biome + Syncpack)
@@ -114,17 +127,17 @@ demo-shop/
 
 ### Fixes
 
-- **Bag Icon**: Dynamic item count
-- **Logo**: Add and style
-- **Accessibility**: Image `alt`, VoiceOver support
-- **Similar Items**: Scrollbar style, overflow fix
-- **Not Found**: Better styling
-- **Borders**: Consistent grid thickness
+- **Bag Icon**: Better styling
+- **Logo**: Better styling
+- **Accessibility**: Image `alt`, VoiceOver support of all elements
+- **Similar Items**: Scrollbar style, add the right overflow
+- **Borders**: Consistent thickness of grid borders
 - **Search**: Close button animation
-- **Loading**: Header bar indicator
+- **Loading**: Add it to the header bar
 
 ### Improvements
 
+- **Not Found**: Better styling
 - **Tooltip**: For interactive elements
 - **Localization**: Multi-language support
 - **Animations**: Enhance actions
