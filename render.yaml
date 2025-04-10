@@ -2,7 +2,7 @@ services:
   - type: web
     name: ecommerce_server
     runtime: node
-    buildCommand: "yarn install && yarn turbo run build --filter=!@demo-shop/apps-web --filter=!@demo-shop/ui-components"
+    buildCommand: "yarn install && yarn turbo run build --filter='!@demo-shop/apps-web' --filter='!@demo-shop/ui-components'"
     startCommand: "yarn workspace @demo-shop/apps-server start:prod"
     envVars:
       - key: NODE_ENV
@@ -17,7 +17,7 @@ services:
   - type: web
     name: ecommerce_web
     runtime: node
-    buildCommand: "yarn install && yarn turbo run build --filter=!@demo-shop/apps-server"
+    buildCommand: "yarn install && yarn turbo run build --filter='!@demo-shop/apps-server'"
     startCommand: "yarn workspace @demo-shop/apps-web start"
     envVars:
       - key: NEXT_PUBLIC_API_URL
