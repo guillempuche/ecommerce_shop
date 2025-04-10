@@ -4,15 +4,26 @@ const nextConfig = {
 	compiler: {
 		styledComponents: true,
 	},
-	transpilePackages: ['@demo-shop/domain', '@demo-shop/ui-components'],
-	// experimental: {
-	// 	serverActions: true,
-	// },
+	// transpilePackages: ['@demo-shop/domain', '@demo-shop/ui-components'],
 	images: {
-		domains: ['prueba-tecnica-api-tienda-moviles.onrender.com'],
+		remotePatterns: [
+			{
+				protocol: 'https',
+				hostname: 'prueba-tecnica-api-tienda-moviles.onrender.com',
+				port: '',
+			},
+			{
+				protocol: 'http',
+				hostname: 'prueba-tecnica-api-tienda-moviles.onrender.com',
+				port: '',
+			},
+		],
 	},
 
-	webpack: (config, { dev, isServer }) => {
+	// // Specify which paths should be generated at build time and which at runtime
+	// // Using empty array to skip static generation for all dynamic routes
+	// generateStaticParams: async () => [],
+	webpack: (config, { dev }) => {
 		// Development mode configuration
 		if (dev) {
 			// Don't minimize in development
