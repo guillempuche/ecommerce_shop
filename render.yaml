@@ -2,10 +2,8 @@ services:
   - type: web
     name: ecommerce_server
     runtime: node
-    buildCommand: |
-      yarn install
-      yarn turbo run @demo-shop/apps-server#build
-    startCommand: yarn start:prod
+    buildCommand: "yarn install && yarn build"
+    startCommand: "yarn workspace @demo-shop/apps-server start:prod"
     envVars:
       - key: NODE_ENV
         value: production
