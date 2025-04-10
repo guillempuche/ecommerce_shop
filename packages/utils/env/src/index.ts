@@ -12,42 +12,72 @@ const make = Effect.map(
 	({ dotenv, path }) => ({
 		load: Effect.gen(function* () {
 			const env = process.env.NODE_ENV || 'local'
+			const isProd = env === 'production'
 
-			// Try environment-specific file first (.env.local)
-			const envFile = `.env.${env}`
-			const envPath = path.resolve(process.cwd(), envFile)
+			// Define potential paths for env files in order of preference
+			const envPaths = []
 
-			// Fallback to default .env file in current directory
-			const defaultEnvFile = '.env'
-			const defaultPath = path.resolve(process.cwd(), defaultEnvFile)
+			if (isProd) {
+				// Render production-specific paths
+				envPaths.push('/etc/secrets/.env.production')
+				envPaths.push('/etc/secrets/.env')
+			}
 
-			// Additional fallback to monorepo root .env files for Render.com
-			const rootPath = path.resolve(process.cwd(), '../../../.env')
-			const rootEnvPath = path.resolve(process.cwd(), `../../../.env.${env}`)
+			// Standard environment-specific file (.env.local, .env.production)
+			envPaths.push(path.resolve(process.cwd(), `.env.${env}`))
 
-			// Try loading in sequence with fallbacks
-			yield* dotenv.config({ path: envPath }).pipe(
-				Effect.catchTag('ErrorDotenv', () => {
-					return dotenv.config({ path: defaultPath }).pipe(
-						Effect.catchTag('ErrorDotenv', () => {
-							// Try environment-specific file at root
-							return dotenv.config({ path: rootEnvPath }).pipe(
-								Effect.catchTag('ErrorDotenv', () => {
-									// Finally try default .env at root
-									return dotenv.config({ path: rootPath }).pipe(
-										Effect.catchTag('ErrorDotenv', () => {
-											// If all attempts fail, just log and continue
-											return Effect.logError(
-												'No .env files found, using platform environment variables',
-											)
-										}),
-									)
-								}),
-							)
-						}),
-					)
-				}),
+			// Default .env file in current directory
+			envPaths.push(path.resolve(process.cwd(), '.env'))
+
+			// Monorepo root paths
+			envPaths.push(path.resolve(process.cwd(), `../../.env.${env}`))
+			envPaths.push(path.resolve(process.cwd(), '../../.env'))
+
+			yield* Effect.logInfo(
+				`Trying to load environment from ${envPaths.length} potential locations`,
 			)
+
+			// Try each path in sequence, stopping at the first success
+			let loaded = false
+			for (const envPath of envPaths) {
+				yield* dotenv.config({ path: envPath }).pipe(
+					Effect.tap(() =>
+						Effect.sync(() => {
+							loaded = true
+						}),
+					),
+					Effect.tap(() =>
+						Effect.logInfo(`Successfully loaded environment from ${envPath}`),
+					),
+					Effect.catchTag('ErrorDotenv', () => Effect.void),
+				)
+
+				if (loaded) break
+			}
+
+			if (!loaded) {
+				// If no files could be loaded, log and continue with platform env vars
+				yield* Effect.logError(
+					'No .env files found, using platform environment variables',
+				)
+			}
+
+			// Log some environment debug info (avoid showing secrets)
+			const safeEnvKeys = [
+				'NODE_ENV',
+				'SERVER_HOST',
+				'SERVER_PORT',
+				'LOG_LEVEL',
+			]
+			const safeEnv = safeEnvKeys.reduce<Record<string, string | undefined>>(
+				(acc, key) => {
+					if (process.env[key]) acc[key] = process.env[key]
+					return acc
+				},
+				{},
+			)
+
+			yield* Effect.logInfo('Environment configuration', safeEnv)
 		}),
 	}),
 )
