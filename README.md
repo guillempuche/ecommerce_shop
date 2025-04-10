@@ -30,7 +30,7 @@ A seamless shopping experience with a grid-based phone listing, real-time search
 - **State**: React Context API
 - **Styling**: Styled Components, fluid responsive design, CSS variables
 - **Monorepo**: Yarn v4, Turborepo
-- **Testing**: React Testing Library, Playwright for E2E
+- **Testing**: Playwright for E2E, Storybook for UI components
 - **Analysis**: Biome, TypeScript
 - **CI/CD**: Turbo, `render.yaml`
 
@@ -89,6 +89,12 @@ demo-shop/
 ---
 
 ## Testing and Static Analysis
+
+### UI Component Testing with Storybook
+
+Storybook provides an isolated environment to develop, test, and document UI components. Each component in the UI library has its own set of stories that showcase different states and variations, making it easier to develop and test components in isolation.
+
+> **Note:** The Storybook implementation for UI components is mostly complete, with stories for all major components in the UI library. The script to run it is still broken.
 
 ### End-to-End Testing
 
