@@ -1,4 +1,5 @@
 import type { Server } from 'node:https'
+import corsPlugin from '@fastify/cors'
 import formbodyPlugin from '@fastify/formbody'
 import { Effect } from 'effect'
 import fastify, { type FastifyHttpOptions } from 'fastify'
@@ -39,6 +40,28 @@ async function main() {
 	// Register formbody plugin to parse form data (required by SuperTokens)
 	logAppServer.info('Registering Formbody plugin')
 	server.register(formbodyPlugin)
+
+	server.register(corsPlugin, {
+		// Set origin based on environment
+		origin:
+			process.env.NODE_ENV === 'production'
+				? [
+						// List your production domains here
+						'https://your-production-domain.com',
+						'https://www.your-production-domain.com',
+					]
+				: [
+						// Development origins
+						'http://localhost:3000', // Next.js default port
+						'http://localhost:8000', // Any other local development ports
+					],
+		methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
+		credentials: true,
+		maxAge: 86400, // 24 hours
+		preflight: true,
+		// You can also expose headers if needed
+		exposedHeaders: ['X-Total-Count'],
+	})
 
 	logAppServer.info('Setting error handler')
 	server.setErrorHandler((err, request, reply) => {
