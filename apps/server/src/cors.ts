@@ -1,4 +1,3 @@
-// apps/server/src/config/cors.ts
 import { logAppServer } from '@demo-shop/utils-logging'
 
 /**

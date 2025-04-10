@@ -6,6 +6,7 @@ import fastify, { type FastifyHttpOptions } from 'fastify'
 
 import { Env } from '@demo-shop/utils-env'
 import { logAppServer } from '@demo-shop/utils-logging'
+import { getCorsConfig } from './cors.js'
 import { routesProduct } from './routes/product.js'
 
 async function main() {
@@ -41,25 +42,13 @@ async function main() {
 	logAppServer.info('Registering Formbody plugin')
 	server.register(formbodyPlugin)
 
+	const corsConfig = getCorsConfig()
 	server.register(corsPlugin, {
-		// Set origin based on environment
-		origin:
-			process.env.NODE_ENV === 'production'
-				? [
-						// List your production domains here
-						'https://your-production-domain.com',
-						'https://www.your-production-domain.com',
-					]
-				: [
-						// Development origins
-						'http://localhost:3000', // Next.js default port
-						'http://localhost:8000', // Any other local development ports
-					],
-		methods: ['GET', 'POST', 'PUT', 'DELETE', 'OPTIONS'],
-		credentials: true,
-		maxAge: 86400, // 24 hours
+		origin: corsConfig.allowedOrigins,
+		methods: corsConfig.allowedMethods,
+		maxAge: corsConfig.maxAge,
+		credentials: false,
 		preflight: true,
-		// You can also expose headers if needed
 		exposedHeaders: ['X-Total-Count'],
 	})
 
