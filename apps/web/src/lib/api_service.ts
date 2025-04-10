@@ -1,6 +1,7 @@
 import type {
 	ApiResponseProductGetAll,
 	ApiResponseProductGetById,
+	UsecaseProductsGetOne,
 } from '@demo-shop/repos'
 import { productCacheOptions, productsCacheOptions } from './cache_config'
 
@@ -30,16 +31,28 @@ async function fetchApi<T>(
 	return response.json() as Promise<T>
 }
 
-export async function fetchProducts(): Promise<ApiResponseProductGetAll> {
-	return fetchApi<ApiResponseProductGetAll>(
-		'/products',
-		{},
-		productsCacheOptions,
-	)
+export async function fetchProducts(
+	searchQuery?: string,
+	limit = 20,
+	offset = 0,
+): Promise<ApiResponseProductGetAll> {
+	const queryParams = new URLSearchParams()
+
+	if (searchQuery) {
+		queryParams.append('search', searchQuery)
+	}
+
+	queryParams.append('limit', limit.toString())
+	queryParams.append('offset', offset.toString())
+
+	const queryString = queryParams.toString()
+	const endpoint = queryString ? `/products?${queryString}` : '/products'
+
+	return fetchApi<ApiResponseProductGetAll>(endpoint, {}, productsCacheOptions)
 }
 
 export async function fetchProductById(
-	id: string,
+	id: UsecaseProductsGetOne,
 ): Promise<ApiResponseProductGetById | null> {
 	try {
 		return await fetchApi<ApiResponseProductGetById>(
