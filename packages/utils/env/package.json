@@ -16,6 +16,7 @@
 		"watch": "tsc --watch --preserveWatchOutput"
 	},
 	"dependencies": {
+		"@demo-shop/utils-logging": "workspace:*",
 		"dotenv": "16.4.5"
 	},
 	"peerDependencies": {

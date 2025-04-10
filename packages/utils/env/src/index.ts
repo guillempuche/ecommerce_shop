@@ -2,6 +2,7 @@ import { Path } from '@effect/platform'
 import { NodePath } from '@effect/platform-node'
 import { Effect, Layer } from 'effect'
 
+import { logUtilsEnv } from '@demo-shop/utils-logging'
 import { Dotenv } from './dotenv.js'
 
 const make = Effect.map(
@@ -33,7 +34,7 @@ const make = Effect.map(
 			envPaths.push(path.resolve(process.cwd(), `../../.env.${env}`))
 			envPaths.push(path.resolve(process.cwd(), '../../.env'))
 
-			yield* Effect.logInfo(
+			logUtilsEnv.info(
 				`Trying to load environment from ${envPaths.length} potential locations`,
 			)
 
@@ -47,7 +48,7 @@ const make = Effect.map(
 						}),
 					),
 					Effect.tap(() =>
-						Effect.logInfo(`Successfully loaded environment from ${envPath}`),
+						logUtilsEnv.info(`Successfully loaded environment from ${envPath}`),
 					),
 					Effect.catchTag('ErrorDotenv', () => Effect.void),
 				)
@@ -57,7 +58,7 @@ const make = Effect.map(
 
 			if (!loaded) {
 				// If no files could be loaded, log and continue with platform env vars
-				yield* Effect.logError(
+				logUtilsEnv.warn(
 					'No .env files found, using platform environment variables',
 				)
 			}
@@ -77,7 +78,7 @@ const make = Effect.map(
 				{},
 			)
 
-			yield* Effect.logInfo('Environment configuration', safeEnv)
+			logUtilsEnv.info('Environment configuration', { env: safeEnv })
 		}),
 	}),
 )

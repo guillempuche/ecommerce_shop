@@ -443,6 +443,7 @@ __metadata:
   version: 0.0.0-use.local
   resolution: "@demo-shop/utils-env@workspace:packages/utils/env"
   dependencies:
+    "@demo-shop/utils-logging": "workspace:*"
     "@demo-shop/utils-tsconfig": "workspace:*"
     "@effect/platform": "npm:0.69.31"
     "@effect/platform-node": "npm:0.64.23"

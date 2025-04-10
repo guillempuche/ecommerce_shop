@@ -9,3 +9,6 @@ export const logAppServer = rootProvider
 	.getCategory('apps')
 	.getChildCategory('server')
 export const logRepos = rootProvider.getCategory('repos')
+export const logUtilsEnv = rootProvider
+	.getCategory('utils')
+	.getChildCategory('env')
