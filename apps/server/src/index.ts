@@ -1,6 +1,5 @@
 import type { Server } from 'node:https'
 import corsPlugin from '@fastify/cors'
-import formbodyPlugin from '@fastify/formbody'
 import { Effect } from 'effect'
 import fastify, { type FastifyHttpOptions } from 'fastify'
 
@@ -37,10 +36,6 @@ async function main() {
 	}
 
 	const server = fastify(serverOptions)
-
-	// Register formbody plugin to parse form data (required by SuperTokens)
-	logAppServer.info('Registering Formbody plugin')
-	server.register(formbodyPlugin)
 
 	const corsConfig = getCorsConfig()
 	server.register(corsPlugin, {
