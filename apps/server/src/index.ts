@@ -54,6 +54,10 @@ async function main() {
 	logAppServer.info('Registering routes')
 	server.register(routesProduct)
 
+	server.get('/', async () => {
+		return { message: 'Welcome to the eCommerce API' }
+	})
+
 	// Health check route
 	server.get('/check', async () => {
 		return { message: 'Health check' }
