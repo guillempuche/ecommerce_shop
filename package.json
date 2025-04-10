@@ -16,8 +16,8 @@
 	],
 	"scripts": {
 		"______ Development ______": "Run applications in development mode",
-		"server": "yarn turbo run @demo-shop/apps-server#start",
-		"web": "yarn turbo run @demo-shop/apps-web#start",
+		"server": "yarn workspace @demo-shop/apps-server start",
+		"web": "yarn workspace @demo-shop/apps-web dev",
 		"chrome": "\"/Applications/Google Chrome.app/Contents/MacOS/Google Chrome\" --remote-debugging-port=9222 &",
 		"generate-paths": "yarn workspace @demo-shop/utils-tsconfig generate-paths",
 		"______ Build ______": "Build and run the monorepo",
