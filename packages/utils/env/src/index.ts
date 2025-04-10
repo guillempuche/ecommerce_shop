@@ -68,6 +68,8 @@ const make = Effect.map(
 				'NODE_ENV',
 				'SERVER_HOST',
 				'SERVER_PORT',
+				'API_BASE_URL',
+				'API_KEY',
 				'LOG_LEVEL',
 			]
 			const safeEnv = safeEnvKeys.reduce<Record<string, string | undefined>>(
