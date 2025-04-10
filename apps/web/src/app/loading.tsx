@@ -6,6 +6,7 @@ export default function Loading() {
 				justifyContent: 'center',
 				alignItems: 'center',
 				height: '100vh',
+				fontSize: 'var(--font-size-md)',
 			}}
 		>
 			<span>Loading...</span>

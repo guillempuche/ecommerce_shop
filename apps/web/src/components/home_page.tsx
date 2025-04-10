@@ -2,12 +2,12 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { LayoutPage } from '@/components/layout_page'
 import { useCart } from '@/contexts/cart'
-import { ProductProvider, useProducts } from '@/contexts/product'
+import { fetchProducts } from '@/lib/api_service'
 import type { ApiResponseProductGetAll } from '@demo-shop/repos'
 import { Search, SmartphoneCard } from '@demo-shop/ui-components'
 
@@ -50,9 +50,33 @@ const CardWrapper = styled.div`
 `
 
 const HomePageContent = () => {
-	const { filteredProducts, searchQuery, setSearchQuery } = useProducts()
+	const [products, setProducts] = useState<ApiResponseProductGetAll>([])
+	const [searchQuery, setSearchQuery] = useState<string>('')
+	const [isLoading, setIsLoading] = useState<boolean>(true)
 	const { totalItems } = useCart()
 	const [hoveredProductId, setHoveredProductId] = useState<string | null>(null)
+
+	useEffect(() => {
+		const loadProducts = async () => {
+			setIsLoading(true)
+			try {
+				// Always limit to 20 products
+				const productsData = await fetchProducts(searchQuery, 20, 0)
+				setProducts(productsData)
+			} catch (error) {
+				console.error('Error fetching products:', error)
+			} finally {
+				setIsLoading(false)
+			}
+		}
+
+		// Small delay to prevent too many API calls while typing
+		const timer = setTimeout(() => {
+			loadProducts()
+		}, 300)
+
+		return () => clearTimeout(timer)
+	}, [searchQuery])
 
 	return (
 		<LayoutPage cartItemCount={totalItems}>
@@ -67,14 +91,15 @@ const HomePageContent = () => {
 
 			<ProductsInfo>
 				<p>
-					{filteredProducts.length}{' '}
-					{filteredProducts.length === 1 ? 'product' : 'products'}
+					{products.length} {products.length === 1 ? 'product' : 'products'}
 				</p>
 			</ProductsInfo>
 
-			{filteredProducts.length > 0 ? (
+			{isLoading ? (
+				<div>Loading...</div>
+			) : products.length > 0 ? (
 				<ProductsGrid>
-					{filteredProducts.map(product => (
+					{products.map(product => (
 						<CardWrapper
 							key={product.id}
 							onMouseEnter={() => setHoveredProductId(product.id)}
@@ -110,14 +135,6 @@ const HomePageContent = () => {
 	)
 }
 
-interface HomePageClientProps {
-	products: ApiResponseProductGetAll
-}
-
-export function HomePageClient({ products }: HomePageClientProps) {
-	return (
-		<ProductProvider initialProducts={products}>
-			<HomePageContent />
-		</ProductProvider>
-	)
+export function HomePageClient() {
+	return <HomePageContent />
 }

@@ -46,6 +46,7 @@ const MainContent = styled.main`
 
 export function LayoutPage({ children, cartItemCount = 0 }: LayoutPageProps) {
 	const router = useRouter()
+
 	return (
 		<>
 			<LayoutContainer>

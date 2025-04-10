@@ -2,11 +2,12 @@
 
 import Image from 'next/image'
 import Link from 'next/link'
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import styled from 'styled-components'
 
 import { LayoutPage } from '@/components/layout_page'
 import { useCart } from '@/contexts/cart'
+import { fetchProductById } from '@/lib/api_service'
 import type {
 	ProductColorOption,
 	ProductStorageOption,
@@ -82,7 +83,12 @@ const ProductImageContainer = styled.div`
   img {
     max-width: 100%;
     height: auto;
+    max-height: 600px;
     object-fit: contain;
+    
+    @media (max-width: 768px) {
+      max-height: 270px;
+    }
   }
 `
 
@@ -106,7 +112,7 @@ const ProductInfo = styled.div`
 const ProductName = styled.h1`
   font-size: var(--font-size-lg);
   text-transform: uppercase;
-  margin-top: var(--space-fluid-2xl);
+  margin-top: var(--space-fluid-lg);
   margin-bottom: var(--space-fluid-xs);
 
 `
@@ -201,28 +207,57 @@ const SimilarItemCard = styled.div`
   cursor: pointer;
 `
 
-interface ProductDetailPageProps {
-	product: ApiResponseProductGetById
+interface ProductDetailsPageProps {
+	productId: string
 }
 
-export function ProductDetailPage({ product }: ProductDetailPageProps) {
+export function ProductDetailsPage({ productId }: ProductDetailsPageProps) {
+	const { addItem, totalItems } = useCart()
+	const [product, setProduct] = useState<ApiResponseProductGetById | null>(null)
+	const [isLoading, setIsLoading] = useState(true)
 	const [selectedColor, setSelectedColor] = useState<
 		ProductColorOption | undefined
-	>(product.colorOptions.length > 0 ? product.colorOptions[0] : undefined)
-
+	>(undefined)
 	const [selectedStorage, setSelectedStorage] = useState<
 		ProductStorageOption | undefined
-	>(product.storageOptions.length > 0 ? product.storageOptions[0] : undefined)
-
-	const { addItem, totalItems } = useCart()
+	>(undefined)
 	const [hoveredProductId, setHoveredProductId] = useState<string | null>(null)
 
+	useEffect(() => {
+		const loadProduct = async () => {
+			setIsLoading(true)
+			const productData = await fetchProductById(productId)
+			setProduct(productData)
+
+			// Only update selectedColor and selectedStorage if product is loaded successfully
+			if (productData) {
+				setSelectedColor(
+					productData.colorOptions.length > 0
+						? productData.colorOptions[0]
+						: undefined,
+				)
+				setSelectedStorage(
+					productData.storageOptions.length > 0
+						? productData.storageOptions[0]
+						: undefined,
+				)
+			}
+
+			setIsLoading(false)
+		}
+
+		loadProduct()
+	}, [productId])
+
 	// Calculate product price based on selected storage
-	const totalPrice = selectedStorage
-		? product.basePrice + selectedStorage.price
-		: product.basePrice
+	const totalPrice =
+		product && selectedStorage
+			? product.basePrice + selectedStorage.price
+			: product?.basePrice || 0
 
 	const handleAddToCart = () => {
+		if (!product) return
+
 		// Ensure imageUrl is always a string
 		const imageUrl = selectedColor
 			? selectedColor.imageUrl.toString()
@@ -241,6 +276,84 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
 		}
 
 		addItem(item)
+	}
+
+	// If loading, show a loading state
+	if (isLoading) {
+		return (
+			<LayoutPage cartItemCount={totalItems}>
+				<BackLink href='/'>
+					<ChevronIcon
+						xmlns='http://www.w3.org/2000/svg'
+						viewBox='0 0 24 24'
+						fill='none'
+						stroke='currentColor'
+						strokeWidth='2'
+						strokeLinecap='round'
+						strokeLinejoin='round'
+					>
+						<polyline points='15 18 9 12 15 6' />
+					</ChevronIcon>
+					<BackLabel>Back</BackLabel>
+				</BackLink>
+
+				<div
+					style={{
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+						justifyContent: 'center',
+						flex: '1 1 auto',
+						gap: 'var(--space-fluid-xl)',
+						padding: 'var(--space-fluid-2xl) 0',
+						minHeight: '50vh',
+					}}
+				>
+					<h2>Loading product...</h2>
+				</div>
+			</LayoutPage>
+		)
+	}
+
+	// If the product is not found, show a message
+	if (!product) {
+		return (
+			<LayoutPage cartItemCount={totalItems}>
+				<BackLink href='/'>
+					<ChevronIcon
+						xmlns='http://www.w3.org/2000/svg'
+						viewBox='0 0 24 24'
+						fill='none'
+						stroke='currentColor'
+						strokeWidth='2'
+						strokeLinecap='round'
+						strokeLinejoin='round'
+					>
+						<polyline points='15 18 9 12 15 6' />
+					</ChevronIcon>
+					<BackLabel>Back</BackLabel>
+				</BackLink>
+
+				<div
+					style={{
+						display: 'flex',
+						flexDirection: 'column',
+						alignItems: 'center',
+						justifyContent: 'center',
+						flex: '1 1 auto',
+						gap: 'var(--space-fluid-xl)',
+						padding: 'var(--space-fluid-2xl) 0',
+						minHeight: '50vh',
+					}}
+				>
+					<h2>Product not found</h2>
+					<p>Sorry, we couldn't find the product you're looking for.</p>
+					<Link href='/'>
+						<Button>Browse Products</Button>
+					</Link>
+				</div>
+			</LayoutPage>
+		)
 	}
 
 	return (
@@ -269,7 +382,12 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
 							width={500}
 							height={500}
 							priority
-							style={{ objectFit: 'contain' }}
+							style={{
+								objectFit: 'contain',
+								width: 'auto',
+								height: 'auto',
+								maxHeight: '600px',
+							}}
 						/>
 					) : (
 						<Image
@@ -278,7 +396,12 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
 							width={500}
 							height={500}
 							priority
-							style={{ objectFit: 'contain' }}
+							style={{
+								objectFit: 'contain',
+								width: 'auto',
+								height: 'auto',
+								maxHeight: '600px',
+							}}
 						/>
 					)}
 				</ProductImageContainer>
@@ -372,7 +495,6 @@ export function ProductDetailPage({ product }: ProductDetailPageProps) {
 												alt={similarProduct.name}
 												width={200}
 												height={200}
-												style={{ objectFit: 'contain' }}
 											/>
 										}
 										onClick={() => {}}
