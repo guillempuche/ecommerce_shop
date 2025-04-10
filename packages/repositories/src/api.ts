@@ -2,38 +2,10 @@ import { Config, Schema as S } from 'effect'
 
 import { EntityProduct } from '@demo-shop/domain'
 
-// export class ApiConfig extends Context.Tag("ApiConfig")<ApiConfig, {
-// 	baseUrl: Config.Config<string>
-// 	key: Config.Config<string>
-// }>() {}
-// export const ApiConfigLive = Layer.effect(
-// 	ApiConfig,
-// 	Effect.succeed({
-// 		baseUrl: Config.string('API_BASE_URL'),
-// 		key: Config.redacted('API_KEY'),
-// 	})
-// )
-
 export const ApiConfig = Config.all({
 	baseUrl: Config.string('API_BASE_URL'),
 	key: Config.redacted('API_KEY'),
 })
-
-// export class ApiBaseUrl extends Context.Tag("ApiBaseUrl")<ApiBaseUrl, string>() {}
-// export const ApiBaseUrlLive = Layer.effect(
-//   ApiBaseUrl,
-//   Config.string('API_BASE_URL')
-// )
-
-// export class ApiKey extends Context.Tag("ApiKey")<ApiKey, Redacted.Redacted<string>>() {}
-// export const ApiKeyLive = Layer.effect(
-//   ApiKey,
-//   Config.redacted('API_KEY')
-// )
-
-// export const EnvConfigProviderLayer = Layer.setConfigProvider(
-//   ConfigProvider.fromEnv()
-// )
 
 export const ApiResponseProductSimilar = S.Struct({
 	id: S.UUID,
