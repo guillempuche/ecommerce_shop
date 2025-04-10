@@ -8,7 +8,7 @@ export default function Loading() {
 				height: '100vh',
 			}}
 		>
-			<h2>Loading...</h2>
+			<span>Loading...</span>
 		</div>
 	)
 }
