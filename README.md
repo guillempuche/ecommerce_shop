@@ -28,7 +28,7 @@ A seamless shopping experience with a grid-based phone listing, real-time search
 - **Frontend**: Next.js v14 (SSR), React 18, Styled Components
 - **Backend**: Node.js 22
 - **State**: React Context API
-- **Styling**: Styled Components, fluid responsive design, CSS variables
+- **Styling**: Styled Components, fluid responsive design (dynamic spacing), CSS variables
 - **Monorepo**: Yarn v4, Turborepo
 - **Testing**: Playwright for E2E, Storybook for UI components
 - **Analysis**: Biome, TypeScript
@@ -133,6 +133,7 @@ To run E2E tests, both the web and server applications need to be running. The t
 
 ### Fixes
 
+- **Checkout**: Better responsiveness for small screens in card item and bottom section
 - **Bag Icon**: Better styling
 - **Logo**: Better styling
 - **Accessibility**: Image `alt`, VoiceOver support of all elements
@@ -143,6 +144,7 @@ To run E2E tests, both the web and server applications need to be running. The t
 
 ### Improvements
 
+- **Images**: Faster loading
 - **Not Found**: Better styling
 - **Tooltip**: For interactive elements
 - **Localization**: Multi-language support
